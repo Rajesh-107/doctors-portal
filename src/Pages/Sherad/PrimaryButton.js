@@ -1,10 +1,11 @@
 import React from 'react';
 
-const PrimaryButton = ({children}) => {
-    return (
-        <div>
-              <button class="btn btn-primary uppercase text-white font-bold bg-gradient-to-r from-secondary to-primary py-2">{children}</button>
-        </div>
+const PrimaryButton = ({ children }) => {
+    return ( <
+        div >
+        <
+        button className = "btn btn-primary uppercase text-white font-bold bg-gradient-to-r from-secondary to-primary py-2" > { children } < /button> <
+        /div>
     );
 };
 
