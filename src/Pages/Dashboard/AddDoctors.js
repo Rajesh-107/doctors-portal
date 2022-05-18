@@ -2,9 +2,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import Loading from '../Sherad/Loading';
+import { toast } from 'react-toastify';
 
 const AddDoctors = () => {
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
 
     const {data: services, isLoading} = useQuery('services', () => fetch('http://localhost:5000/service').then(res => res.json()))
 
@@ -29,9 +30,26 @@ const AddDoctors = () => {
                     specialty: data.specialty,
                     img: img
                 }
-                
+                fetch('http://localhost:5000/doctor', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                        authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                    },
+                    body: JSON.stringify(doctor)
+                })
+                .then(res => res.json())
+                .then(inserted => {
+                    if(inserted.insertedId){
+                        toast.success('Doctor added succesfully');
+                        reset();
+                    }
+                    else{
+                        toast.error('Failed to add doctor')
+                    }
+                })
             }
-            console.log('imgbb', result);
+            
         })
     }
 
